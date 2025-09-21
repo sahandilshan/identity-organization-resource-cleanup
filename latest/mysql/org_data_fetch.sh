@@ -47,7 +47,6 @@ if [[ ! -s "$RAW_OUTPUT" ]]; then
   echo "Query executed successfully but no data returned. Exiting with success."
   > "$EXPORT_FILE"
   exit 0
-  exit 0
 fi
 
 # Add header to the output file

@@ -24,6 +24,7 @@ echo "TENANT_ID" > "$SUCCESSFUL_DELETIONS_FILE"
 
 # Predefined table deletion order
 TABLE_LIST=(
+  "IDN_OAUTH_PAR"
   "IDN_OAUTH_CONSUMER_APPS"
   "IDN_OAUTH2_SCOPE"
   "SP_APP"
@@ -114,7 +115,6 @@ while IFS=',' read -r TENANT_ID ORG_UUID; do
       if [[ "$table" == "IDN_ORG_USER_INVITATION" ]]; then
         DELETE_PROCEDURE+="DELETE FROM $table WHERE INVITED_ORG_ID = '$ORG_UUID';"
       elif [[ "$table" == "IDN_OAUTH_PAR" ]]; then
-        # "IDN_OAUTH_PAR" not in DELETE_ORDER since not in TABLE_LIST, so this won't execute
         DELETE_PROCEDURE+="DELETE FROM $table WHERE CLIENT_ID IN (SELECT CONSUMER_KEY FROM IDN_OAUTH_CONSUMER_APPS WHERE TENANT_ID = $TENANT_ID);"
       else
         DELETE_PROCEDURE+="DELETE FROM $table WHERE TENANT_ID = $TENANT_ID;"
